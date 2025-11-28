@@ -1,52 +1,103 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView, SafeAreaView} from 'react-native';
 import {useAuth} from '../../store/AuthContext';
-import ScreenContainer from '../../components/ScreenContainer';
 import AppButton from '../../components/AppButton';
 import Card from '../../components/Card';
-import {colors, spacing, typography} from '../../theme/theme';
+import {colors, spacing, typography, borderRadius} from '../../theme/theme';
+
+const mockUser = {name: 'Yasir Ahmed'};
+const mockStats = {postsCount: 12, rewardsPoints: 240, circlesJoined: 5};
+const mockActivity = [
+  {title: 'Joined “Design Circle”', time: '2h ago'},
+  {title: 'Commented on a post', time: '5h ago'},
+  {title: 'Shared an update', time: 'Yesterday'},
+  {title: 'Earned 40 reward points', time: '2 days ago'},
+];
 
 const DashboardScreen = () => {
   const {user} = useAuth();
+  const displayName = user?.name || mockUser.name;
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <Text style={styles.title}>Hello, {user?.name}!</Text>
-          <Text style={styles.subtitle}>Welcome back to cirQQles</Text>
+          <View>
+            <Text style={styles.welcome}>Welcome back, {displayName.split(' ')[0]}</Text>
+            <Text style={styles.subtitle}>Here’s your cirQQles overview</Text>
+          </View>
         </View>
 
-        <View style={styles.stats}>
-          <Card style={styles.statCard}>
-            <Text style={styles.statNumber}>0</Text>
+        <View style={styles.statsRow}>
+          <Card style={styles.statCard} shadow="medium">
             <Text style={styles.statLabel}>Posts</Text>
+            <Text style={styles.statValue}>{mockStats.postsCount}</Text>
           </Card>
-          <Card style={styles.statCard}>
-            <Text style={styles.statNumber}>0</Text>
-            <Text style={styles.statLabel}>Following</Text>
+          <Card style={styles.statCard} shadow="medium">
+            <Text style={styles.statLabel}>Rewards Points</Text>
+            <Text style={styles.statValue}>{mockStats.rewardsPoints}</Text>
           </Card>
-          <Card style={styles.statCard}>
-            <Text style={styles.statNumber}>0</Text>
-            <Text style={styles.statLabel}>Followers</Text>
+          <Card style={styles.statCard} shadow="medium">
+            <Text style={styles.statLabel}>Circles Joined</Text>
+            <Text style={styles.statValue}>{mockStats.circlesJoined}</Text>
           </Card>
         </View>
 
-        <View style={styles.quickActions}>
-          <Text style={styles.sectionTitle}>Quick Actions</Text>
-          <AppButton
-            title="Create New Post"
-            onPress={() => {/* Navigate to create post */}}
-            style={styles.actionButton}
-          />
-          <AppButton
-            title="Explore Content"
-            onPress={() => {/* Navigate to feed */}}
-            variant="outline"
-            style={styles.actionButton}
-          />
-        </View>
+        <Card style={styles.sectionCard} shadow="medium">
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Your Account</Text>
+            <Text style={styles.sectionSubtitle}>Manage your profile and access</Text>
+          </View>
+          <View style={styles.buttonStack}>
+            <AppButton title="View Profile" onPress={() => {}} style={styles.stackButton} />
+            <AppButton
+              title="Sign Out"
+              onPress={() => {}}
+              variant="secondary"
+              style={[styles.stackButton, styles.secondaryButton]}
+            />
+          </View>
+        </Card>
 
+        <Card style={styles.sectionCard} shadow="medium">
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Recent Activity</Text>
+            <Text style={styles.sectionSubtitle}>Latest actions across your circles</Text>
+          </View>
+          <View>
+            {mockActivity.map((item, index) => (
+              <View
+                key={`${item.title}-${index}`}
+                style={[
+                  styles.activityItem,
+                  index !== mockActivity.length - 1 && styles.activityItemSpacing,
+                ]}>
+                <View style={styles.activityDot} />
+                <View style={styles.activityTextContainer}>
+                  <Text style={styles.activityTitle}>{item.title}</Text>
+                  <Text style={styles.activityTime}>{item.time}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </Card>
+
+        <Card style={styles.sectionCard} shadow="medium">
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Rewards</Text>
+            <Text style={styles.sectionSubtitle}>Keep earning through engagement</Text>
+          </View>
+          <View style={styles.rewardsRow}>
+            <View style={styles.rewardsInfo}>
+              <Text style={styles.rewardsPoints}>{mockStats.rewardsPoints}</Text>
+              <Text style={styles.rewardsLabel}>Current points</Text>
+            </View>
+            <AppButton title="View Rewards" onPress={() => {}} style={styles.rewardsButton} />
+          </View>
+        </Card>
       </ScrollView>
     </SafeAreaView>
   );
@@ -60,59 +111,117 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  content: {
+    padding: spacing.lg,
+    paddingBottom: spacing.xxl,
+    backgroundColor: colors.surface,
+  },
   header: {
-    paddingTop: spacing.xl,
-    paddingHorizontal: spacing.lg,
     marginBottom: spacing.xl,
   },
-  title: {
+  welcome: {
     fontSize: typography.fontSize.xxxl,
     fontWeight: typography.fontWeight.bold,
     color: colors.textPrimary,
     marginBottom: spacing.xs,
   },
   subtitle: {
-    fontSize: typography.fontSize.lg,
+    fontSize: typography.fontSize.md,
     color: colors.textSecondary,
   },
-  stats: {
+  statsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: spacing.xl,
-    paddingHorizontal: spacing.lg,
   },
   statCard: {
     flex: 1,
-    alignItems: 'center',
-    marginHorizontal: spacing.xs,
-    padding: spacing.lg,
-  },
-  statNumber: {
-    fontSize: typography.fontSize.xxl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.primary,
-    marginBottom: spacing.xs,
+    marginRight: spacing.sm,
+    borderRadius: borderRadius.xl,
   },
   statLabel: {
     fontSize: typography.fontSize.sm,
     color: colors.textSecondary,
-    textAlign: 'center',
+    marginBottom: spacing.xs,
   },
-  quickActions: {
-    marginBottom: spacing.xl,
-    paddingHorizontal: spacing.lg,
+  statValue: {
+    fontSize: typography.fontSize.xxl,
+    fontWeight: typography.fontWeight.bold,
+    color: colors.primary,
+  },
+  sectionCard: {
+    borderRadius: borderRadius.xl,
+    marginBottom: spacing.lg,
+  },
+  sectionHeader: {
+    marginBottom: spacing.md,
   },
   sectionTitle: {
-    fontSize: typography.fontSize.lg,
+    fontSize: typography.fontSize.xl,
     fontWeight: typography.fontWeight.semibold,
     color: colors.textPrimary,
+    marginBottom: spacing.xs,
+  },
+  sectionSubtitle: {
+    fontSize: typography.fontSize.sm,
+    color: colors.textSecondary,
+  },
+  buttonStack: {},
+  stackButton: {
+    marginBottom: spacing.sm,
+  },
+  secondaryButton: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.primary,
+  },
+  activityItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  activityItemSpacing: {
     marginBottom: spacing.md,
   },
-  actionButton: {
-    marginBottom: spacing.md,
+  activityDot: {
+    width: 10,
+    height: 10,
+    borderRadius: borderRadius.full,
+    backgroundColor: colors.primary,
+    marginRight: spacing.md,
   },
-  signOutButton: {
-    alignSelf: 'center',
+  activityTextContainer: {
+    flex: 1,
+  },
+  activityTitle: {
+    fontSize: typography.fontSize.md,
+    color: colors.textPrimary,
+    marginBottom: spacing.xs / 2,
+  },
+  activityTime: {
+    fontSize: typography.fontSize.sm,
+    color: colors.textSecondary,
+  },
+  rewardsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  rewardsInfo: {
+    flexDirection: 'column',
+    flex: 1,
+  },
+  rewardsPoints: {
+    fontSize: typography.fontSize.xxl,
+    fontWeight: typography.fontWeight.bold,
+    color: colors.primary,
+  },
+  rewardsLabel: {
+    fontSize: typography.fontSize.sm,
+    color: colors.textSecondary,
+    marginTop: spacing.xs / 2,
+  },
+  rewardsButton: {
+    flexBasis: '45%',
   },
 });
 

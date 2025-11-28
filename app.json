@@ -18,6 +18,12 @@
       "statusBar": {
         "translucent": true,
         "backgroundColor": "transparent"
+      },
+      "package": "com.cirQQles"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "be55256a-95c1-430a-b6c5-ea8abe5abffd"
       }
     }
   }

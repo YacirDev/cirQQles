@@ -18,6 +18,8 @@ const ProfileScreen = () => {
       if (user?.id) {
         try {
           const userProfile = await getUserProfile(user.id);
+          console.log('profile screen ------------>>',user);
+          
           setProfile(userProfile);
         } catch (error) {
           console.error('Failed to fetch profile:', error);
@@ -37,6 +39,8 @@ const ProfileScreen = () => {
       </ScreenContainer>
     );
   }
+console.log('profile data ----------->>',profile);
+console.log('user data ----------->>',user);
 
   return (
     <ScreenContainer>
@@ -44,11 +48,11 @@ const ProfileScreen = () => {
         <View style={styles.header}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>
-              {(profile?.name || user?.name || 'U').charAt(0).toUpperCase()}
+              {(user?.name || profile?.name || 'U').charAt(0).toUpperCase()}
             </Text>
           </View>
-          <Text style={styles.name}>{profile?.name || user?.name}</Text>
-          <Text style={styles.email}>{profile?.email || user?.email}</Text>
+          <Text style={styles.name}>{user?.name || profile?.name}</Text>
+          <Text style={styles.email}>{user?.email || profile?.email}</Text>
         </View>
 
         <Card style={styles.infoCard}>
@@ -65,15 +69,15 @@ const ProfileScreen = () => {
           <Text style={styles.sectionTitle}>Statistics</Text>
           <View style={styles.stats}>
             <View style={styles.stat}>
-              <Text style={styles.statNumber}>0</Text>
+              <Text style={styles.statNumber}>2</Text>
               <Text style={styles.statLabel}>Posts</Text>
             </View>
             <View style={styles.stat}>
-              <Text style={styles.statNumber}>0</Text>
+              <Text style={styles.statNumber}>10</Text>
               <Text style={styles.statLabel}>Following</Text>
             </View>
             <View style={styles.stat}>
-              <Text style={styles.statNumber}>0</Text>
+              <Text style={styles.statNumber}>20</Text>
               <Text style={styles.statLabel}>Followers</Text>
             </View>
           </View>
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
   bio: {
     fontSize: typography.fontSize.md,
     color: colors.textPrimary,
-    lineHeight: typography.lineHeight.normal,
+    // lineHeight: typography.lineHeight.normal,
     marginBottom: spacing.md,
   },
   memberSince: {

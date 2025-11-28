@@ -15,7 +15,7 @@ const RewardsScreen = () => {
 
       <Card style={styles.pointsCard}>
         <Text style={styles.pointsTitle}>Your Points</Text>
-        <Text style={styles.pointsValue}>0</Text>
+        <Text style={styles.pointsValue}>300</Text>
         <Text style={styles.pointsSubtitle}>Keep engaging to earn more!</Text>
       </Card>
 
@@ -25,7 +25,7 @@ const RewardsScreen = () => {
         <Card style={styles.rewardCard}>
           <View style={styles.rewardHeader}>
             <Text style={styles.rewardTitle}>Welcome Badge</Text>
-            <Text style={styles.rewardPoints}>0 pts</Text>
+            <Text style={styles.rewardPoints}>200 pts</Text>
           </View>
           <Text style={styles.rewardDescription}>Your first reward for joining cirQQles!</Text>
           <AppButton
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   rewardDescription: {
     fontSize: typography.fontSize.md,
     color: colors.textSecondary,
-    lineHeight: typography.lineHeight.normal,
+    // lineHeight: typography.lineHeight.normal,
     marginBottom: spacing.md,
   },
   claimButton: {
