@@ -46,7 +46,7 @@ const DashboardScreen = () => {
           </Card>
         </View>
 
-        <Card style={styles.sectionCard} shadow="medium">
+        {/* <Card style={styles.sectionCard} shadow="medium">
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Your Account</Text>
             <Text style={styles.sectionSubtitle}>Manage your profile and access</Text>
@@ -60,7 +60,7 @@ const DashboardScreen = () => {
               style={[styles.stackButton, styles.secondaryButton]}
             />
           </View>
-        </Card>
+        </Card> */}
 
         <Card style={styles.sectionCard} shadow="medium">
           <View style={styles.sectionHeader}>
